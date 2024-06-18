@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="YourName">
+  <link rel="shortcut icon" href="favicon.png">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <title>Admin Dashboard</title>
+</head>
+<body>
+  <nav class="custom-navbar navbar navbar-expand-md navbar-dark bg-dark" aria-label="Bookstore navigation bar">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Bookstore<span>.</span></a>
+    </div>
+  </nav>
+  <div class="hero">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="col-lg-5">
+          <div class="intro-excerpt">
+            <h1>Admin Dashboard</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="untree_co-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h2>Book Management</h2>
+          <form method="post" action="/admin/books/add">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="form-group">
+              <label for="title">Book Title</label>
+              <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+              <label for="author">Author</label>
+              <input type="text" class="form-control" id="author" name="author" required>
+            </div>
+            <div class="form-group">
+              <label for="genre">Genre</label>
+              <input type="text" class="form-control" id="genre" name="genre" required>
+            </div>
+            <div class="form-group">
+              <label for="price">Price</label>
+              <input type="number" class="form-control" id="price" name="price" required>
+            </div>
+            <div class="form-group">
+              <label for="stock">Stock</label>
+              <input type="number" class="form-control" id="stock" name="stock" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Book</button>
+          </form>
+        </div>
+        <div class="col-md-4">
+          <h2>Order Management</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>User</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Sample row -->
+              <tr>
+                <td>1234</td>
+                <td>john_doe</td>
+                <td>$50.00</td>
+                <td>Pending</td>
+                <td>
+                  <a href="/admin/orders/1234" class="btn btn-info">View</a>
+                  <a href="/admin/orders/1234/edit" class="btn btn-warning">Edit</a>
+                  <a href="/admin/orders/1234/delete" class="btn btn-danger">Delete</a>
+                </td>
+              </tr>
+              <!-- More rows can be added dynamically -->
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-4">
+          <h2>Dashboard</h2>
+          <p>Total Users: 100</p>
+          <p>Total Sales: $5000.00</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
