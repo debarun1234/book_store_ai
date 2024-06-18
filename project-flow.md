@@ -70,7 +70,7 @@ Thank You Page (thankyou.html)
   |
   v
 End
-
+```
 
 ## Admin Flow
 ### Front End
@@ -129,7 +129,7 @@ Manage Users
   |
   v
 End
-
+``` 
 ## Backend Developement Plan
 
 ### Setup the Project
