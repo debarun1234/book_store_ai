@@ -12,7 +12,7 @@
 <body>
   <nav class="custom-navbar navbar navbar-expand-md navbar-dark bg-dark" aria-label="Bookstore navigation bar">
     <div class="container">
-      <a class="navbar-brand" href="index.html">Bookstore<span>.</span></a>
+      <a class="navbar-brand" href="index.html">DBR and Co.<span>.</span></a>
     </div>
   </nav>
   <div class="hero">
@@ -35,15 +35,24 @@
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <div class="form-group">
               <label for="username">Username</label>
-              <input type="text" class="form-control" id="username" name="username" value="john_doe" readonly>
+              <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}" readonly>
             </div>
             <div class="form-group">
               <label for="email">Email</label>
-              <input type="email" class="form-control" id="email" name="email" value="john@example.com">
+              <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="text" class="form-control" id="phone" name="phone" value="{{ user.phone }}" required>
+            </div>
+            <div class="form-group">
+              <label for="address">Delivery Address</label>
+              <textarea class="form-control" id="address" name="address" required>{{ user.address }}</textarea>
             </div>
             <button type="submit" class="btn btn-primary">Update</button>
           </form>
-          <h2>Order History</h2>
+
+          <h2 class="mt-5">Order History</h2>
           <table class="table">
             <thead>
               <tr>
@@ -55,20 +64,191 @@
               </tr>
             </thead>
             <tbody>
-              <!-- Sample row -->
+              <!-- Dynamic content will be loaded here -->
+              {% for order in orders %}
               <tr>
-                <td>1234</td>
-                <td>2023-06-18</td>
-                <td>$50.00</td>
-                <td>Shipped</td>
-                <td><a href="/orders/1234" class="btn btn-info">View</a></td>
+                <td>{{ order.id }}</td>
+                <td>{{ order.date }}</td>
+                <td>${{ order.total }}</td>
+                <td>{{ order.status }}</td>
+                <td>
+                  {% if order.status == 'Pending' %}
+                  <button class="btn btn-danger btn-sm" onclick="cancelOrder('{{ order.id }}')">Cancel</button>
+                  {% endif %}
+                  <button class="btn btn-info btn-sm" onclick="viewOrderDetails('{{ order.id }}')">View</button>
+                </td>
               </tr>
-              <!-- More rows can be added dynamically -->
+              {% endfor %}
             </tbody>
           </table>
         </div>
       </div>
     </div>
   </div>
+
+  <footer class="footer-section">
+    <div class="container relative">
+      <div class="sofa-img">
+        <img src="images/sofa.png" alt="Image" class="img-fluid">
+      </div>
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="subscription-form">
+            <h3 class="d-flex align-items-center"><span class="me-1"><img src="images/envelope-outline.svg" alt="Image" class="img-fluid"></span><span>Subscribe to Newsletter</span></h3>
+            <form action="#" class="row g-3">
+              <div class="col-auto">
+                <input type="text" class="form-control" placeholder="Enter your name">
+              </div>
+              <div class="col-auto">
+                <input type="email" class="form-control" placeholder="Enter your email">
+              </div>
+              <div class="col-auto">
+                <button class="btn btn-primary">
+                  <span class="fa fa-paper-plane"></span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="row g-5 mb-5">
+        <div class="col-lg-4">
+          <div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">DBR and Co.<span>.</span></a></div>
+          <p class="mb-4">Discover a wide variety of books across different genres. Browse our collection and find your next great read!</p>
+          <ul class="list-unstyled custom-social">
+            <li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
+            <li><a href="#"><span class="fa fa-brands fa-linkedin"></span></a></li>
+          </ul>
+        </div>
+        <div class="col-lg-8">
+          <div class="row links-wrap">
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">About us</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Contact us</a></li>
+              </ul>
+            </div>
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Knowledge base</a></li>
+                <li><a href="#">Live chat</a></li>
+              </ul>
+            </div>
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Jobs</a></li>
+                <li><a href="#">Our team</a></li>
+                <li><a href="#">Leadership</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+              </ul>
+            </div>
+            <div class="col-6 col-sm-6 col-md-3">
+              <ul class="list-unstyled">
+                <li><a href="#">Fiction</a></li>
+                <li><a href="#">Non-Fiction</a></li>
+                <li><a href="#">Mystery</a></li>
+                <li><a href="#">Science Fiction</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border-top copyright">
+        <div class="row pt-4">
+          <div class="col-lg-6">
+            <p class="mb-2 text-center text-lg-start">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash; Designed with love by <a href="https://untree.co">Untree.co</a></p>
+          </div>
+          <div class="col-lg-6 text-center text-lg-end">
+            <ul class="list-unstyled d-inline-flex ms-auto">
+              <li class="me-4"><a href="#">Terms &amp; Conditions</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/tiny-slider.js"></script>
+  <script src="js/custom.js"></script>
+  <script>
+    function cancelOrder(orderId) {
+      if (confirm('Are you sure you want to cancel this order?')) {
+        fetch(`/cancel-order/${orderId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('input[name="csrf_token"]').value
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('Order cancelled successfully');
+            location.reload();
+          } else {
+            alert('Failed to cancel order');
+          }
+        });
+      }
+    }
+
+    function viewOrderDetails(orderId) {
+    fetch(`/order-details/${orderId}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          const orderDetails = `
+            <h5>Order ID: ${data.order.id}</h5>
+            <p><strong>Date:</strong> ${data.order.date}</p>
+            <p><strong>Status:</strong> ${data.order.status}</p>
+            <p><strong>Total:</strong> $${data.order.total}</p>
+            <h6>Items:</h6>
+            <ul>
+              ${data.order.items.map(item => `
+                <li>
+                  <p><strong>Title:</strong> ${item.title}</p>
+                  <p><strong>Author:</strong> ${item.author}</p>
+                  <p><strong>Quantity:</strong> ${item.quantity}</p>
+                  <p><strong>Price:</strong> $${item.price}</p>
+                </li>
+              `).join('')}
+            </ul>
+          `;
+          document.getElementById('order-details-modal-body').innerHTML = orderDetails;
+          var myModal = new bootstrap.Modal(document.getElementById('orderDetailsModal'), {
+            keyboard: false
+          });
+          myModal.show();
+        } else {
+          alert('Failed to fetch order details');
+        }
+      });
+  }
+</script>
 </body>
 </html>
+
+<!-- Order Details Modal -->
+<div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="orderDetailsModalLabel">Order Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="order-details-modal-body">
+        <!-- Order details will be loaded here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
